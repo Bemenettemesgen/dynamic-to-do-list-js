@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addButton = document.getElementById('add-task-btn');
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
-
+    classList.add
     function addTask(taskText = taskInput.value.trim(), save = true) {
         // Check if taskText is not empty
         if (taskText === '') {
@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // checking if event.key equals 'Enter' before calling addTask
     taskInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            addTask();
+            addTask(classList.add);classList.add
+
         }
     });
 });
