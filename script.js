@@ -5,18 +5,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to add a new task
     function addTask(taskText, save = true) {
-        taskText = taskText.trim();
-        if (taskText === "") {
+        taskText = taskText.trim(); // Trim the task input value
+        if (taskText === "") { // Check if the taskText is not empty
             alert("Please enter a task.");
             return;
         }
 
+        // Create a new li element and set its textContent to taskText
         const li = document.createElement('li');
         li.textContent = taskText;
 
+        // Create a new button element for removing the task
         const removeButton = document.createElement('button');
         removeButton.textContent = "Remove";
         removeButton.className = 'remove-btn';
+
+        // Assign an onclick event to the remove button to remove the li element from taskList
         removeButton.onclick = () => {
             taskList.removeChild(li);
             if (save) {
@@ -24,11 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
+        // Append the remove button to the li element and the li element to taskList
         li.appendChild(removeButton);
         taskList.appendChild(li);
 
+        // Clear the task input field
         taskInput.value = "";
 
+        // Save tasks to localStorage if save is true
         if (save) {
             saveTasks();
         }
