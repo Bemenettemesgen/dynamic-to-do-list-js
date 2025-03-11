@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskInput = document.getElementById('task-input');
     const taskList = document.getElementById('task-list');
 
-    function addTask() {
-        const taskText = taskInput.value.trim();
+    function addTask(taskText = taskInput.value.trim(), save = true) {
         if (taskText === '') {
             alert('Please enter a task!');
             return;
@@ -18,45 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
         removeBtn.className = 'remove-btn';
         removeBtn.onclick = function() {
             taskList.removeChild(li);
-        };
-
-        li.appendChild(removeBtn);
-        taskList.appendChild(li);
-        taskInput.value = '';
-    }
-
-    addButton.addEventListener('click', addTask);
-
-    taskInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            addTask();
-        }
-    });
-});
-document.addEventListener('DOMContentLoaded', () => {
-    const addButton = document.getElementById('add-task-btn');
-    const taskInput = document.getElementById('task-input');
-    const taskList = document.getElementById('task-list');
-
-    function addTask(taskText, save = true) {
-        const li = document.createElement('li');
-        const span = document.createElement('span');
-        span.textContent = taskText;
-
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Remove';
-        removeBtn.className = 'remove-btn';
-        removeBtn.onclick = function() {
-            taskList.removeChild(li);
-            const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
-            const index = tasks.indexOf(taskText);
-            if (index > -1) {
-                tasks.splice(index, 1);
-                localStorage.setItem('tasks', JSON.stringify(tasks));
+            if (save) {
+                const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+                const index = tasks.indexOf(taskText);
+                if (index > -1) {
+                    tasks.splice(index, 1);
+                    localStorage.setItem('tasks', JSON.stringify(tasks));
+                }
             }
         };
 
-        li.appendChild(span);
         li.appendChild(removeBtn);
         taskList.appendChild(li);
 
@@ -65,6 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             tasks.push(taskText);
             localStorage.setItem('tasks', JSON.stringify(tasks));
         }
+
+        taskInput.value = ''; // Clear the task input field
     }
 
     function loadTasks() {
@@ -75,24 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
     loadTasks();
 
     addButton.addEventListener('click', () => {
-        const taskText = taskInput.value.trim();
-        if (taskText === '') {
-            alert('Please enter a task!');
-            return;
-        }
-        addTask(taskText);
-        taskInput.value = '';
+        addTask();
     });
 
     taskInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
-            const taskText = taskInput.value.trim();
-            if (taskText === '') {
-                alert('Please enter a task!');
-                return;
-            }
-            addTask(taskText);
-            taskInput.value = '';
+            addTask();
         }
     });
 });
